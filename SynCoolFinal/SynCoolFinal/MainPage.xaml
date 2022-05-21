@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SynCoolFinal.MainPage">
+
+
+    <StackLayout>
+        <Frame BackgroundColor="#2196F3" Padding="24" >
+            <Label Text="SynCool" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        </Frame>
+
+        <StackLayout Padding="60"  VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+            <Image WidthRequest="200" HeightRequest="200"></Image>
+            <Entry x:Name="txtMail" Placeholder="E-Mail" ></Entry>
+            <Entry x:Name="txtPass" Placeholder="Password" IsPassword="True"></Entry>
+            <Button x:Name="btnAccedi" CornerRadius="50" Clicked="btnAccedi_Clicked" VerticalOptions="Center" Text="Accedi" BackgroundColor="Transparent" BorderWidth="1.5" BorderColor="#007fff"></Button>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Non hai un profilo? "></Span>
+                        <Span Text="Registrati" TextDecorations="Underline"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+
+
+
+    </StackLayout>
+
+</ContentPage>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SynCoolFinal.Registrazione">
+
+    <StackLayout>
+        <Frame BackgroundColor="#2196F3" Padding="24" >
+            <Label Text="SynCool" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        </Frame>
+
+        <ScrollView>
+            <StackLayout Padding="40" VerticalOptions="Center">
+
+                <Image x:Name="imageProfilo"></Image>
+                
+                <Label Text="Registrati" FontSize="Large" HorizontalOptions="Center"></Label>
+                <Entry x:Name="txtUser" Placeholder="Username"></Entry>
+                <Entry x:Name="txtNome" Placeholder="Nome"></Entry>
+                <Entry x:Name="txtCognome" Placeholder="Cognome"></Entry>
+                <Entry x:Name="txtCitta" Placeholder="Città"></Entry>
+                <DatePicker x:Name="data"></DatePicker>
+                <Entry x:Name="txtMail" Placeholder="E-Mail"></Entry>
+                <Entry x:Name="txtPassword" Placeholder="Password" IsPassword="True"></Entry>
+                <Entry x:Name="txtConfermaPW" Placeholder="Conferma Password" IsPassword="True"></Entry>
+                <Entry x:Name="txtDesc" Placeholder="Descrizione Profilo"></Entry>
+                <Entry x:Name="txtIndirizzo" Placeholder="Indirizzo"></Entry>
+
+
+
+                <Label HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Che tipo di utente sei?"></Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Grid Padding="20" Margin="10" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton x:Name="rdbTutor" Content="Tutor" Grid.Row="0" Grid.Column="0" ></RadioButton>
+                    <RadioButton x:Name="rdbStudente" Content="Studente" Grid.Row="0" Grid.Column="1" ></RadioButton>
+                </Grid>
+
+                <Button x:Name="btnRegistrati" 
+                Text="Registrati"
+                BorderWidth="1.5"
+                HorizontalOptions="Center"
+                BorderColor="DarkGray"
+                Background="transparent"
+                CornerRadius="50"
+                Clicked="btnRegistrati_Clicked"
+            ></Button>
+
+                <Button x:Name="btnUploadImage" 
+                Text="Upload immagine"
+                BorderWidth="1.5"
+                HorizontalOptions="Center"
+                BorderColor="DarkGray"
+                Background="transparent"
+                CornerRadius="50"
+                Clicked="btnUploadImage_Clicked"
+            ></Button>
+
+
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>
