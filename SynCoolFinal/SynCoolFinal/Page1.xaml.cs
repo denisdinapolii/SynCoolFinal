@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,15 +30,14 @@ namespace SynCoolFinal
            
             string url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=get&action=resPass&mailOus={txtMailOus.Text}";
 
-            string response = await client.GetStringAsync(url);
+            string xml = await client.GetStringAsync(url);
 
-            document = XDocument.Parse(response);
-            document.Descendants("Success");
-
-            if( Boolean.Parse(document.Element("Success").Value))
-                await DisplayAlert("Information", document.Element("Messaggio").Value, "Ok");
-            else
-                await DisplayAlert("Attention", document.Element("Messaggio").Value, "Ok");
+            XmlSerializer serializer = new XmlSerializer(typeof(recovery));
+            using (StringReader reader = new StringReader(xml))
+            {
+                recovery test = (recovery)serializer.Deserialize(reader);
+                await DisplayAlert("Information", test.Messaggio as string, "Ok");
+            }
         }
     }
 }
