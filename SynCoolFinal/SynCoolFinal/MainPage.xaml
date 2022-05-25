@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SynCoolFinal.MainPage">
+             x:Class="SynCoolFinal.MainPage"
+             xmlns:local="clr-namespace:SynCoolFinal;assembly=SynCoolFinal">
 
 
     <StackLayout>
@@ -10,7 +11,10 @@
         </Frame>
 
         <StackLayout Padding="60"  VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-            <Image WidthRequest="200" HeightRequest="200"></Image>
+
+            <Image Source="{local:ImageResource SynCoolFinal.synlogo.png}"/>
+            
+            
             <Entry x:Name="txtMail" Placeholder="E-Mail" ></Entry>
             <Entry x:Name="txtPass" Placeholder="Password" IsPassword="True"></Entry>
             <Button x:Name="btnAccedi" CornerRadius="50" Clicked="btnAccedi_Clicked" VerticalOptions="Center" Text="Accedi" BackgroundColor="Transparent" BorderWidth="1.5" BorderColor="#007fff"></Button>
@@ -23,6 +27,17 @@
                 </Label.FormattedText>
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Non ricordi la tua password?"></Span>
+                        <Span Text="Clicca qui!" TextDecorations="Underline"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"></TapGestureRecognizer>
                 </Label.GestureRecognizers>
             </Label>
         </StackLayout>

@@ -38,5 +38,10 @@ namespace SynCoolFinal
                 await DisplayAlert("Alert", "Errore nella login", "Ok");
             }
         }
+
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new Page1());
+        }
     }
 }

@@ -10,8 +10,19 @@
 
         <ScrollView>
             <StackLayout Padding="40" VerticalOptions="Center">
+                <Picker Title="Scegli la scuola" x:Name="cmbScuole" ItemDisplayBinding="{Binding Nome}">
+                </Picker>
 
-                <Image x:Name="imageProfilo"></Image>
+
+                <Frame CornerRadius="100" 
+                   HeightRequest="200"
+                   WidthRequest="200"
+                   HorizontalOptions="Center"
+                   Padding="0"
+                   IsClippedToBounds="True">
+                    <Image x:Name="imageProfilo" HorizontalOptions="Center" VerticalOptions="Center" ></Image>
+                </Frame>
+                
                 
                 <Label Text="Registrati" FontSize="Large" HorizontalOptions="Center"></Label>
                 <Entry x:Name="txtUser" Placeholder="Username"></Entry>
@@ -43,9 +54,11 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <RadioButton x:Name="rdbTutor" Content="Tutor" Grid.Row="0" Grid.Column="0" ></RadioButton>
-                    <RadioButton x:Name="rdbStudente" Content="Studente" Grid.Row="0" Grid.Column="1" ></RadioButton>
+                    <RadioButton x:Name="rdbStudente" IsEnabled="True" Content="Studente" Grid.Row="0" Grid.Column="1" ></RadioButton>
                 </Grid>
 
+                
+                
                 <Button x:Name="btnRegistrati" 
                 Text="Registrati"
                 BorderWidth="1.5"
