@@ -12,7 +12,7 @@
 
         <StackLayout Padding="60"  VerticalOptions="Center" HorizontalOptions="FillAndExpand">
 
-            <Image Source="{local:ImageResource SynCoolFinal.synlogo.png}"/>
+            <Image Source="{local:ImageResource SynCoolFinal.embeddedImage.synlogo.png}"/>
             
             
             <Entry x:Name="txtMail" Placeholder="E-Mail" ></Entry>

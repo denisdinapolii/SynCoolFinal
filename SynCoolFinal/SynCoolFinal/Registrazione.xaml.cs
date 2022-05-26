@@ -29,13 +29,8 @@ namespace SynCoolFinal
         {
             string url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=get&action=getAllScuole";
             string xml=await client.GetStringAsync(url);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Root));
-            using (StringReader reader = new StringReader(xml))
-            {
-               Root test = (Root)serializer.Deserialize(reader);
-               cmbScuole.ItemsSource = test.Scuole.Scuola;
-            }
+            message_scuole res = (message_scuole)util.xmlDeserialization(typeof(message_scuole), xml);
+            cmbScuole.ItemsSource = res.scuole.Scuola;
         }
 
         private async void btnRegistrati_Clicked(object sender, EventArgs e)
@@ -48,7 +43,7 @@ namespace SynCoolFinal
             string url = "";
             string d=data.Date.ToString("yyyy-MM-dd");
             if (name is null)
-                url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=post&action=register&username={txtUser.Text}&nome={txtNome.Text}&cognome={txtCognome.Text}&mail={txtMail.Text}&pass={txtPassword.Text}&dataN={d}&foto=NULL&desc={txtDesc.Text}&citta={txtCitta.Text}&tutor={tutor}&indirizzo={txtIndirizzo.Text}&scuola={(cmbScuole.SelectedItem as Scuola).ID}";
+                url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=post&action=register&username={txtUser.Text}&nome={txtNome.Text}&cognome={txtCognome.Text}&mail={txtMail.Text}&pass={txtPassword.Text}&dataN={d}&foto=NULL&desc={txtDesc.Text}&citta={txtCitta.Text}&tutor={tutor}&indirizzo={txtIndirizzo.Text}&scuola={(cmbScuole.SelectedItem as message_scuole.Scuola).ID}";
             else
                 url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=post&action=register&username={txtUser.Text}&nome={txtNome.Text}&cognome={txtCognome.Text}&mail={txtMail.Text}&pass={txtPassword.Text}&dataN={d}&foto={name}&desc={txtDesc.Text}&citta={txtCitta.Text}&tutor={tutor}&indirizzo={txtIndirizzo.Text}&scuola=1";
 

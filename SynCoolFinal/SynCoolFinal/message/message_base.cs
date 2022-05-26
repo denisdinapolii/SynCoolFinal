@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace SynCoolFinal
 {
 	[XmlRoot(ElementName = "root")]
-	public class recovery
+	public class message_base: message.result
 	{
 
 		[XmlElement(ElementName = "Success")]

@@ -29,13 +29,17 @@ namespace SynCoolFinal
 
 
             string response = await client.GetStringAsync(url);
-            if (response.Contains("true"))
+
+            message_base res = (message_base)util.xmlDeserialization(typeof(message_base), response);
+
+
+            if (res.Success is true)
             {
-                await DisplayAlert("Information", "Loggato correttamente..", "Ok");
+                await DisplayAlert("Information", res.Messaggio , "Ok");
             }
             else
             {
-                await DisplayAlert("Alert", "Errore nella login", "Ok");
+                await DisplayAlert("Alert", res.Messaggio, "Ok");
             }
         }
 

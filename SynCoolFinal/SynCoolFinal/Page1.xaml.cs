@@ -32,12 +32,18 @@ namespace SynCoolFinal
 
             string xml = await client.GetStringAsync(url);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(recovery));
-            using (StringReader reader = new StringReader(xml))
+
+            message.result res= util.xmlDeserialization(typeof(message_base), xml);
+            try
             {
-                recovery test = (recovery)serializer.Deserialize(reader);
-                await DisplayAlert("Information", test.Messaggio as string, "Ok");
+                await DisplayAlert("Information", res.obj as string, "Ok");
             }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+            
         }
     }
 }
