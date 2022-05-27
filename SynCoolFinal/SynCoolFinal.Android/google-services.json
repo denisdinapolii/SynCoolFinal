@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1088600945900",
+    "project_id": "syncool-6f25c",
+    "storage_bucket": "syncool-6f25c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088600945900:android:f7fc64458a35340da2e1c9",
+        "android_client_info": {
+          "package_name": "com.companyname.syncoolfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088600945900-c2ag9oho9ltmv0i3mbkkkr9jeoskp5aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtCvwGb2Uo-zAp-r-Y_t1vSra8mX29cJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088600945900-c2ag9oho9ltmv0i3mbkkkr9jeoskp5aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

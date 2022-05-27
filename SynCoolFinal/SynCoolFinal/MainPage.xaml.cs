@@ -35,11 +35,11 @@ namespace SynCoolFinal
 
             if (res.Success is true)
             {
-                await DisplayAlert("Information", res.Messaggio , "Ok");
+                await Navigation.PushModalAsync(new home());
             }
             else
             {
-                await DisplayAlert("Alert", res.Messaggio, "Ok");
+                await DisplayAlert("Attenzione", res.Messaggio, "Ok");
             }
         }
 
