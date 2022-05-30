@@ -19,7 +19,10 @@ namespace SynCoolFinal
         public caricaAppunto()
         {
             InitializeComponent();
-            this.mail = mail;
+            MessagingCenter.Subscribe<Object, string>(this, "mail", (s, res) =>
+            {
+                this.mail = Convert.ToString(res);
+            });
             client = new HttpClient();
             writeCmbMateria();
         }
@@ -28,15 +31,33 @@ namespace SynCoolFinal
         {
             string url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=get&action=getMaterie";
             string xml = await client.GetStringAsync(url);
-            message_base res = (message_base)util.xmlDeserialization(typeof(message_base), xml);
-            //cmbMateria.ItemsSource = res.Messaggio;
+            try
+            {
+                message_materie res = (message_materie)util.xmlDeserialization(typeof(message_materie), xml);
+                cmbMateria.ItemsSource = res.materie.Materia;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            
             var file = await FilePicker.PickAsync();
-            string filename = file.FileName;
+            string filename = "";
             var file_upload = await file.OpenReadAsync();
+
+            if (txtFilename.Text != null)
+            {
+                filename = txtFilename.Text;
+            }
+            else 
+            {
+                filename = file.FileName;
+            }
+
 
             var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(filename);
             var metadata = new MetadataChange
@@ -44,7 +65,7 @@ namespace SynCoolFinal
                 CustomMetadata = new Dictionary<string, string>
                 {
                     ["id_utente"] = this.mail,
-                    ["id_categoria"]=cmbMateria.SelectedItem as string
+                    ["id_categoria"]=(cmbMateria.SelectedItem as message_materie.Materia).ID.ToString()
                 }
             };
 

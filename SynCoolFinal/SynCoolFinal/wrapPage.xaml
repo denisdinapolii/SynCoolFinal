@@ -5,7 +5,6 @@
             xmlns:local="clr-namespace:SynCoolFinal">
 
 
-
     <FlyoutPage.Flyout>
         <local:FlyoutMenuPage x:Name="flyout"/>
     </FlyoutPage.Flyout>

@@ -17,12 +17,13 @@ namespace SynCoolFinal
         {
             InitializeComponent();
             this.mail = mail;
+            MessagingCenter.Send<Object, string>(this, "mail", mail);
             flyout.listview.ItemSelected += OnSelectedItem;
         }
 
         private void OnSelectedItem(object sender, SelectedItemChangedEventArgs e)
         {
-
+            
             var item = e.SelectedItem as FlyoutItemPage;
             if (item != null)
             {
