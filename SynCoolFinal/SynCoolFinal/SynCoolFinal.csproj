@@ -11,21 +11,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="embeddedImage\home.png" />
+    <None Remove="embeddedImage\upload.png" />
     <None Remove="synlogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="embeddedImage\home.png" />
     <EmbeddedResource Include="embeddedImage\synlogo.png" />
+    <EmbeddedResource Include="embeddedImage\upload.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
+    <PackageReference Include="Plugin.FirebaseStorage" Version="4.1.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="home.xaml.cs">
+      <DependentUpon>home.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="caricaAppunto.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="FlyoutMenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="home.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -35,5 +52,12 @@
     <EmbeddedResource Update="Registrazione.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="wrapPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
 </Project>

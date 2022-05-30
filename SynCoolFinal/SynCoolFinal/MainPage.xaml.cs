@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace SynCoolFinal
 
             if (res.Success is true)
             {
-                await Navigation.PushModalAsync(new home());
+                await Navigation.PushModalAsync(new wrapPage(res.Messaggio));
             }
             else
             {
