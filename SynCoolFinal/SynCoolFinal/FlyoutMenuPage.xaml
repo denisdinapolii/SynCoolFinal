@@ -10,6 +10,7 @@
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type local:FlyoutItemPage}">
                     <local:FlyoutItemPage Title="Home" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.home.png}" TargetPage="{x:Type local:home}"/>
+                    <local:FlyoutItemPage Title="Profilo" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.profile.png}" TargetPage="{x:Type local:Profile}"/>
                     <local:FlyoutItemPage Title="Carica appunto" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.upload.png}" TargetPage="{x:Type local:caricaAppunto}"/>
                 </x:Array>                                                     
             </ListView.ItemsSource>
@@ -25,7 +26,8 @@
                             <Label 
                                 Grid.Column="1" 
                                 Text="{Binding Title}"
-                                VerticalOptions="Center"/>
+                                HorizontalOptions="StartAndExpand"
+                                FontSize="28"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

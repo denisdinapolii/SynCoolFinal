@@ -11,13 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="embeddedImage\home.png" />
+    <None Remove="embeddedImage\profile.png" />
     <None Remove="embeddedImage\upload.png" />
     <None Remove="synlogo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="embeddedImage\home.png" />
+    <EmbeddedResource Include="embeddedImage\profile.png" />
     <EmbeddedResource Include="embeddedImage\synlogo.png" />
     <EmbeddedResource Include="embeddedImage\upload.png" />
   </ItemGroup>
@@ -46,7 +54,13 @@
     <EmbeddedResource Update="home.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="listViewAppunti.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Page1.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Profile.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Registrazione.xaml">
@@ -55,9 +69,5 @@
     <EmbeddedResource Update="wrapPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
 </Project>

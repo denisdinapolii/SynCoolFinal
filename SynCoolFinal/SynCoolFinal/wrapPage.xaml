@@ -12,7 +12,7 @@
     <FlyoutPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <local:caricaAppunto/>
+                <local:home/>
             </x:Arguments>
         </NavigationPage>
     </FlyoutPage.Detail>

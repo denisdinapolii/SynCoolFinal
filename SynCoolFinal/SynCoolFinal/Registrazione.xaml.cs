@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using Plugin.Media.Abstractions;
 using System.Xml.Serialization;
 using System.IO;
+using Plugin.FirebaseStorage;
 
 namespace SynCoolFinal
 {
@@ -17,6 +18,7 @@ namespace SynCoolFinal
     public partial class Registrazione : ContentPage
     {
         HttpClient client;
+        MediaFile image_profile { get; set; }
         string name{ get; set; }
         public Registrazione()
         {
@@ -45,13 +47,22 @@ namespace SynCoolFinal
             if (name is null)
                 url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=post&action=register&username={txtUser.Text}&nome={txtNome.Text}&cognome={txtCognome.Text}&mail={txtMail.Text}&pass={txtPassword.Text}&dataN={d}&foto=NULL&desc={txtDesc.Text}&citta={txtCitta.Text}&tutor={tutor}&indirizzo={txtIndirizzo.Text}&scuola={(cmbScuole.SelectedItem as message_scuole.Scuola).ID}";
             else
-                url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=post&action=register&username={txtUser.Text}&nome={txtNome.Text}&cognome={txtCognome.Text}&mail={txtMail.Text}&pass={txtPassword.Text}&dataN={d}&foto={name}&desc={txtDesc.Text}&citta={txtCitta.Text}&tutor={tutor}&indirizzo={txtIndirizzo.Text}&scuola=1";
+                url = $"http://barclayspremierleague.altervista.org/webService/index.php?method=post&action=register&username={txtUser.Text}&nome={txtNome.Text}&cognome={txtCognome.Text}&mail={txtMail.Text}&pass={txtPassword.Text}&dataN={d}&foto={name}&desc={txtDesc.Text}&citta={txtCitta.Text}&tutor={tutor}&indirizzo={txtIndirizzo.Text}&scuola={(cmbScuole.SelectedItem as message_scuole.Scuola).ID}";
 
 
             string response = await client.GetStringAsync(url);
             if (response.Contains("true"))
             {
                 await DisplayAlert("Information", "Utente registrato correttamente.", "Ok");
+                var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("img_profile").Child(name);
+                var metadata = new MetadataChange
+                {
+                    CustomMetadata = new Dictionary<string, string>
+                    {
+                        ["id_utente"] = txtMail.Text
+                    }
+                };
+                await reference.PutStreamAsync(image_profile.GetStream(),metadata);
             }
             else
             {
@@ -82,7 +93,7 @@ namespace SynCoolFinal
                 };
                 // if you want to take a picture use TakePhotoAsync instead of PickPhotoAsync
                 var selectedImageFile = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
-
+                
 
                 if (imageProfilo == null)
                 {
@@ -92,7 +103,8 @@ namespace SynCoolFinal
 
                 imageProfilo.Source = ImageSource.FromStream(() => selectedImageFile.GetStream());
 
-                name= selectedImageFile.Path.Split('/')[selectedImageFile.Path.Split('/').Length-1];                        
+                name= selectedImageFile.Path.Split('/')[selectedImageFile.Path.Split('/').Length-1];
+                this.image_profile = selectedImageFile;
             }
             catch (Exception ex)
             {

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SynCoolFinal.Profile"
+             Title="Profilo"
+             xmlns:local="clr-namespace:SynCoolFinal">
+    <ScrollView>
+        <StackLayout VerticalOptions="Center" Padding="40">
+            <Label x:Name="txtUsername" Text="prova" FontSize="32" FontAttributes="Bold"></Label>
+           
+             <Label HorizontalOptions="EndAndExpand" Margin="0,20,0,20">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span 
+                            Text="Clicca qui per visionare i tuoi appunti caricati"
+                            TextDecorations="Underline"
+                            ></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+
+
+            <Frame CornerRadius="150" 
+                   HeightRequest="300"
+                   WidthRequest="300"
+                   HorizontalOptions="Center"
+                   Padding="0"
+                   IsClippedToBounds="True">
+                <Image x:Name="imageProfile" HorizontalOptions="Center" VerticalOptions="Center" Source="{local:ImageResource SynCoolFinal.embeddedImage.profile.png}"></Image>
+            </Frame>
+            <Grid Margin="20" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Ruolo: " FontSize="Medium" Grid.Row="0"  Grid.Column="0"></Label>
+                <Label x:Name="txtRuolo" Text="prova" FontSize="Medium" Grid.Row="0" Grid.Column="1"></Label>
+
+                <Label Text="Nome: " FontSize="Medium" Grid.Row="1" Grid.Column="0"></Label>
+                <Label x:Name="txtNome" Text="prova"  FontSize="Medium" Grid.Row="1" Grid.Column="1"></Label>
+
+                <Label Text="Città: " FontSize="Medium"  Grid.Row="2" Grid.Column="0"></Label>
+                <Label x:Name="txtCitta" Text="prova" FontSize="Medium" Grid.Row="2" Grid.Column="1"></Label>
+
+                <Label Text="Cognome: " FontSize="Medium"  Grid.Row="3" Grid.Column="0"></Label>
+                <Label x:Name="txtCognome" Text="prova" FontSize="Medium" Grid.Row="3" Grid.Column="1"></Label>
+
+                <Label Text="E-Mail: " FontSize="Medium"  Grid.Row="4" Grid.Column="0"></Label>
+                <Label x:Name="txtmail" Text="prova" FontSize="Medium" Grid.Row="4" Grid.Column="1"></Label>
+
+                <Label Text="Data:" Grid.Row="5" Grid.Column="0" FontSize="Medium" >
+                </Label>
+                <DatePicker x:Name="data" Grid.Row="5" Grid.Column="1" IsEnabled="false"></DatePicker>
+
+                <Label Text="Descrizione: " FontSize="Medium"  Grid.Row="6" Grid.Column="0"></Label>
+                <Label x:Name="txtDescrizione" Text="prova" FontSize="Medium" Grid.Row="6" Grid.Column="1"></Label>
+            </Grid>
+            
+            <Button x:Name="btnChangeDati" 
+                Text="Cambia i tuoi dati!"
+                BorderWidth="1.5"
+                HorizontalOptions="Center"
+                BorderColor="#2196F3"
+                Background="transparent"
+                CornerRadius="50"
+                Clicked="btnChangeDati_Clicked"
+            ></Button>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -5,36 +5,104 @@
              x:Class="SynCoolFinal.caricaAppunto"
              xmlns:local="clr-namespace:SynCoolFinal">
     <ContentPage.Content>
-        <StackLayout>
-            <Frame BackgroundColor="#2196F3" Padding="24" >
-                <Label Text="SynCool" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-            </Frame>
-    
-            <StackLayout>
-                <Label Text="Vuoi caricare un tuo appunto?"
+        <StackLayout Spacing="30">
+
+
+                <Frame Margin="30,40,30,0" BackgroundColor="#2196F3" CornerRadius="10" >
+                    <Label Text="Vuoi caricare un tuo appunto?"
                        HorizontalOptions="Center"
                        FontSize="Medium"
-                       TextColor="Black" 
+                       TextColor="White" 
                 ></Label>
+                </Frame>
 
-                <StackLayout Spacing="10" Padding="20">
+
+
+                <StackLayout Spacing="20" Padding="20">
                     <Entry
-                        Placeholder="Inserisci il nome del tuo file se vuoi rinominarlo"
+                        Placeholder="Inserisci il nome del tuo file"
                         x:Name="txtFilename"
+                        TextChanged="txtFilename_TextChanged"
                         ></Entry>
-                    <Picker Title="Scegli la materia" x:Name="cmbMateria" ItemDisplayBinding="{Binding Nome}">
+                    <Picker Title="Scegli la materia" x:Name="cmbMateria" ItemDisplayBinding="{Binding Nome}" SelectedIndexChanged="cmbMateria_SelectedIndexChanged">
                     </Picker>
-                    
-                    
-                </StackLayout>
-                
 
-                <Button 
-                Text="Carica appunto"
-                Clicked="Button_Clicked"
-                ></Button>
+
+                    <Grid Margin="0,20,0,0" RowSpacing="18">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*">
+                            </RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Text="Nome file:"
+                           TextColor="Black"
+                           FontSize="20"
+                           Grid.Column="0"
+                           Grid.Row="1"></Label>
+                        <Label x:Name="txtFile" 
+                               Text="Carica un file"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               FontSize="16"
+                               HorizontalOptions="Start"></Label>
+                        <Label Text="Estensione file:"
+                           TextColor="Black"
+                           FontSize="20"
+                           Grid.Column="0"
+                           Grid.Row="2"></Label>
+                        <Label x:Name="txtExt" 
+                               Text="Carica un file"
+                               Grid.Row="2"
+                               Grid.Column="1"
+                               FontSize="16"
+                               HorizontalOptions="Start"></Label>
+                        <Label Text="Materia:"
+                           TextColor="Black"
+                           FontSize="20"
+                           Grid.Column="0"
+                           Grid.Row="3"></Label>
+                        <Label x:Name="txtMateria" 
+                               Text="Scegli la materia"
+                               Grid.Row="3"
+                               Grid.Column="1"
+                               FontSize="16"
+                               HorizontalOptions="Start"></Label>
+                    </Grid>
+                </StackLayout>
+
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="btnInvia" 
+                    Text="Invia"
+                    BorderWidth="1.5"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    BorderColor="#2196F3"
+                    Background="transparent"
+                    CornerRadius="50"
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    Clicked="Button_Clicked"
+            ></Button>
+                    <Button x:Name="btnUpload" 
+                    Text="Upload"
+                    BorderWidth="1.5"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    BorderColor="#2196F3"
+                    Background="transparent"
+                    CornerRadius="50"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Clicked="btnUpload_Clicked"
+            ></Button>
+                </Grid>
+
+
+
             </StackLayout>
 
-        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
