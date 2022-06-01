@@ -10,7 +10,7 @@ namespace SynCoolFinal
 	{
 
 		[XmlElement(ElementName = "Success")]
-		public bool Success { get; set; }
+		new public bool Success { get; set; }
 
 		[XmlElement(ElementName = "Messaggio")]
 		public string Messaggio { get; set; }

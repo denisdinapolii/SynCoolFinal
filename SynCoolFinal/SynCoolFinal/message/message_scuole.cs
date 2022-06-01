@@ -16,7 +16,7 @@ namespace SynCoolFinal
     public class message_scuole : message.result
     {
 		[XmlElement(ElementName = "Success")]
-		public bool Success { get; set; }
+		new public bool Success { get; set; }
 
 		[XmlElement(ElementName = "scuole")]
 		public Scuole scuole { get; set; }

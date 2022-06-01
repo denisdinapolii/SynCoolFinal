@@ -9,7 +9,7 @@ namespace SynCoolFinal
 	public class message_materie:message.result
     {
 		[XmlElement(ElementName = "Success")]
-		public bool Success { get; set; }
+		new public bool Success { get; set; }
 
 		[XmlElement(ElementName = "materie")]
 		public Materie materie { get; set; }

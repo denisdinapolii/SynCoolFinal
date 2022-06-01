@@ -13,11 +13,10 @@ namespace SynCoolFinal
     public partial class wrapPage : FlyoutPage
     {
         public string mail { get; set; }
-        public wrapPage(string mail)
+        public wrapPage()
         {
             InitializeComponent();
-            this.mail = mail;
-            Preferences.Set("mail", this.mail);
+            this.mail = Preferences.Get("mail", "default_value");
             flyout.listview.ItemSelected += OnSelectedItem;
         }
 

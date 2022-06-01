@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SynCoolFinal
@@ -36,7 +37,9 @@ namespace SynCoolFinal
 
             if (res.Success is true)
             {
-                await Navigation.PushModalAsync(new wrapPage(res.Messaggio));
+
+                Preferences.Set("mail", res.Messaggio);
+                await Navigation.PushModalAsync(new wrapPage());
             }
             else
             {

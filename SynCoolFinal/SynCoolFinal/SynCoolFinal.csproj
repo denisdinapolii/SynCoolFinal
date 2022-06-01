@@ -17,15 +17,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="embeddedImage\document.png" />
     <None Remove="embeddedImage\home.png" />
+    <None Remove="embeddedImage\login.png" />
     <None Remove="embeddedImage\profile.png" />
+    <None Remove="embeddedImage\register.png" />
     <None Remove="embeddedImage\upload.png" />
     <None Remove="synlogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="embeddedImage\document.png" />
     <EmbeddedResource Include="embeddedImage\home.png" />
+    <EmbeddedResource Include="embeddedImage\login.png" />
     <EmbeddedResource Include="embeddedImage\profile.png" />
+    <EmbeddedResource Include="embeddedImage\register.png" />
     <EmbeddedResource Include="embeddedImage\synlogo.png" />
     <EmbeddedResource Include="embeddedImage\upload.png" />
   </ItemGroup>

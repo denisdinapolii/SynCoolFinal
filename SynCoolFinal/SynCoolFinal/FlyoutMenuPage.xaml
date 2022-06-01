@@ -12,6 +12,8 @@
                     <local:FlyoutItemPage Title="Home" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.home.png}" TargetPage="{x:Type local:home}"/>
                     <local:FlyoutItemPage Title="Profilo" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.profile.png}" TargetPage="{x:Type local:Profile}"/>
                     <local:FlyoutItemPage Title="Carica appunto" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.upload.png}" TargetPage="{x:Type local:caricaAppunto}"/>
+                    <local:FlyoutItemPage Title="Login" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.login.png}" TargetPage="{x:Type local:MainPage}"/>
+                    <local:FlyoutItemPage Title="Registrati" IconSource="{local:ImageResource SynCoolFinal.embeddedImage.register.png}" TargetPage="{x:Type local:Registrazione}"/>
                 </x:Array>                                                     
             </ListView.ItemsSource>
             <ListView.ItemTemplate>

@@ -10,7 +10,7 @@ namespace SynCoolFinal
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new wrapPage();
         }
 
         protected override void OnStart()

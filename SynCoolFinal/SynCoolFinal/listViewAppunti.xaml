@@ -5,9 +5,21 @@
              xmlns:local="clr-namespace:SynCoolFinal">
 
 
-    <ListView HasUnevenRows="True" x:Name="listViewApp">
+    <StackLayout>
+        <ListView x:Name="listAppunti" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <ViewCell x:Name="cellAppunti">
+                        <StackLayout>
+                            <Image HorizontalOptions="Start" Source="{local:ImageResource SynCoolFinal.embeddedImage.document.png}" />
+                            <Label FontSize="20" HorizontalOptions="CenterAndExpand" TextColor="Black" Text="{Binding Nome}"></Label>
+                            <Label FontSize="20" HorizontalOptions="EndAndExpand" TextColor="Black" Text="{Binding Materia}"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-    </ListView>
-    
+    </StackLayout>
     
 </ContentPage>
