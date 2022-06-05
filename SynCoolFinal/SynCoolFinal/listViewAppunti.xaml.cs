@@ -6,6 +6,10 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SynCoolFinal.ViewModels;
 using Xamarin.Essentials;
+using System.IO;
+using System.Net.Http;
+using System;
+using Plugin.XamarinFormsSaveOpenPDFPackage;
 
 namespace SynCoolFinal
 {
@@ -49,5 +53,27 @@ namespace SynCoolFinal
             Dispatcher.BeginInvokeOnMainThread(() => {  listAppunti.ItemsSource= this.l; });
         }
 
+        private async void listAppunti_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            try
+            {
+                var appunto = e.Item as AppuntiViewModel;
+                var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(appunto.Nome);
+                var stream =await reference.GetStreamAsync();
+                var url = await reference.GetDownloadUrlAsync();
+
+                using (var memory = new MemoryStream()) 
+                {
+                    await stream.CopyToAsync(memory);
+                    await CrossXamarinFormsSaveOpenPDFPackage.Current.SaveAndView("myfile.pdf","application/pdf", memory, PDFOpenContext.InApp);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
+            
+        }
     }
 }

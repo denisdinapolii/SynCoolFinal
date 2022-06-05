@@ -49,12 +49,18 @@ namespace SynCoolFinal
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            string temp = "";// filename temp
             if (this.Materia > -1 || this.filename != "" || this.file_upload != null)
             {
                 try
                 {
+                    if (txtFilename.Text == "" || txtFilename.Text is null)
+                        temp = this.filename;
+                    else
+                        temp = txtFilename.Text;
 
-                    var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(this.filename);
+
+                    var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(temp);
                     var metadata = new MetadataChange
                     {
                         CustomMetadata = new Dictionary<string, string>
@@ -64,12 +70,27 @@ namespace SynCoolFinal
                         }
                     };
 
-                    await reference.PutStreamAsync(file_upload, metadata);
-                    await DisplayAlert("Perfetto", "Appunto caricato con successo!", "Ok");
+                    try
+                    {
+                        var meta = await reference.GetMetadataAsync();
+                        if (meta.CustomMetadata["id_utente"] == this.mail)
+                        {
+                            await DisplayAlert("Attenzione", "Hai già caricato questo documento!", "Ok");
+                            return;
+                        }
+                        await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
+                        await reference.PutStreamAsync(file_upload, metadata);
+                    }
+                    catch (Exception)
+                    {
+                        await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
+                        await reference.PutStreamAsync(file_upload, metadata);
+                    }
+                    
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    await DisplayAlert("Attenzione", "Appunto non caricato!", "Ok");
+                    await DisplayAlert("Attenzione", "Completa i campi necessari!", "Ok");
                 }
             }
             else 
@@ -84,21 +105,21 @@ namespace SynCoolFinal
             {
                 var file = await FilePicker.PickAsync();
                 this.file_upload = await file.OpenReadAsync();
+                this.filename = file.FileName;
+                if (txtFilename.Text is null || txtFilename.Text=="")
+                {
+                    txtFile.Text = this.filename;
+                }
+                else 
+                {
+                    txtFile.Text = txtFilename.Text;
+                }
 
-                if (txtFilename.Text != null)
-                {
-                    filename = txtFilename.Text;
-                }
-                else
-                {
-                    filename = file.FileName;
-                }
-                txtFile.Text = this.filename;
                 txtExt.Text = file.ContentType;
             }
             catch (Exception)
             {
-                await DisplayAlert("Attenzione", "File non caricato in SynCool", "Ok");
+                await DisplayAlert("Attenzione", "Il file non può essere caricato in SynCool", "Ok");
             }
             
         }
@@ -110,10 +131,13 @@ namespace SynCoolFinal
 
         private void txtFilename_TextChanged(object sender, TextChangedEventArgs e)
         {
-            txtFile.Text=txtFilename.Text;
             if (txtFilename.Text == "") 
             {
                 txtFile.Text=this.filename;
+            }
+            else 
+            {
+                txtFile.Text = txtFilename.Text;
             }
         }
     }

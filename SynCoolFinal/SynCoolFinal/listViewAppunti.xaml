@@ -6,7 +6,7 @@
 
 
     <StackLayout>
-        <ListView x:Name="listAppunti" HasUnevenRows="True">
+        <ListView x:Name="listAppunti" HasUnevenRows="True" ItemTapped="listAppunti_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate >
                     <ViewCell x:Name="cellAppunti">
