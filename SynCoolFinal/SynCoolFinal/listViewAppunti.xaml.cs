@@ -75,5 +75,10 @@ namespace SynCoolFinal
             }
             
         }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            listAppunti.ItemsSource = this.l.Where(s => s.Nome.Contains(e.NewTextValue));
+        }
     }
 }

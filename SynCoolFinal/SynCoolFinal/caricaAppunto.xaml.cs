@@ -88,7 +88,7 @@ namespace SynCoolFinal
                     }
                     
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     await DisplayAlert("Attenzione", "Completa i campi necessari!", "Ok");
                 }

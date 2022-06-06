@@ -17,10 +17,10 @@ namespace SynCoolFinal
         {
             InitializeComponent();
             this.mail = Preferences.Get("mail", "default_value");
-            flyout.listview.ItemSelected += OnSelectedItem;
+            flyout.listview.ItemSelected += OnSelectedItemAsync;
         }
 
-        private void OnSelectedItem(object sender, SelectedItemChangedEventArgs e)
+        private void OnSelectedItemAsync(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as FlyoutItemPage;
             if (item != null)
