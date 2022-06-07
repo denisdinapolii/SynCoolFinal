@@ -15,32 +15,49 @@
                      Order="Secondary"
                      Priority="1">
         </ToolbarItem>
+        <ToolbarItem Text="Disconnetti"
+                     Order="Secondary"
+                     Priority="1"
+                     Clicked="ToolbarItem_Clicked_1">
+        </ToolbarItem>
+        
     </ContentPage.ToolbarItems>
-    <ScrollView>
+
     <StackLayout>
-        <Frame Margin="30,40,30,30" BackgroundColor="#2196F3" CornerRadius="10" >
-            <Label Text="Cerca un appunto"
-                       HorizontalOptions="Center"
-                       FontSize="Medium"
-                       TextColor="White" 
-                ></Label>
-        </Frame>
-        <SearchBar HorizontalOptions="FillAndExpand" Placeholder="Cerca" TextChanged="SearchBar_TextChanged"></SearchBar>
-            <ListView HasUnevenRows="True" x:Name="listAppunti" ItemTapped="listAppunti_ItemTapped">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Image HorizontalOptions="Start" Source="{local:ImageResource SynCoolFinal.embeddedImage.document.png}" />
-                                <Label FontSize="20" HorizontalOptions="CenterAndExpand" TextColor="Black" Text="{Binding Nome}"></Label>
-                                <Label FontSize="20" HorizontalOptions="EndAndExpand" TextColor="Black" Text="{Binding Materia}"></Label>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        
+            <Frame Margin="30,40,30,30" BackgroundColor="#2196F3" CornerRadius="10" >
+                <Label Text="Cerca un appunto"
+                               HorizontalOptions="Center"
+                               FontSize="Medium"
+                               TextColor="White" 
+                        ></Label>
+            </Frame>
+
+            <Picker x:Name="cmbMaterie" Title="Scegli la materia" ItemDisplayBinding="{Binding Nome}" 
+                    SelectedIndexChanged="cmbMaterie_SelectedIndexChanged" Margin="20,0,20,10">
+            </Picker>
 
 
-    </ScrollView>
+            <SearchBar HorizontalOptions="FillAndExpand" Placeholder="Cerca" TextChanged="SearchBar_TextChanged"
+                           Margin="0,0,18,0"></SearchBar>
+        <ScrollView>
+            <StackLayout>
+                <ListView HasUnevenRows="True" x:Name="listAppunti" ItemTapped="listAppunti_ItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Image HorizontalOptions="Start" Source="{local:ImageResource SynCoolFinal.embeddedImage.document.png}" />
+                                    <Label FontSize="20" HorizontalOptions="CenterAndExpand" TextColor="Black" Text="{Binding Nome}"></Label>
+                                    <Label FontSize="20" HorizontalOptions="EndAndExpand" TextColor="Black" Text="{Binding Materia}"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
 </ContentPage>

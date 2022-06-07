@@ -50,52 +50,59 @@ namespace SynCoolFinal
         private async void Button_Clicked(object sender, EventArgs e)
         {
             string temp = "";// filename temp
-            if (this.Materia > -1 || this.filename != "" || this.file_upload != null)
+            if (this.mail != null && this.mail != "")
             {
-                try
+                if (this.Materia > -1 && this.filename != "" && this.file_upload != null)
                 {
-                    if (txtFilename.Text == "" || txtFilename.Text is null)
-                        temp = this.filename;
-                    else
-                        temp = txtFilename.Text;
-
-
-                    var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(temp);
-                    var metadata = new MetadataChange
-                    {
-                        CustomMetadata = new Dictionary<string, string>
-                        {
-                            ["id_utente"] = this.mail,
-                            ["id_categoria"] = (cmbMateria.SelectedItem as message_materie.Materia).ID.ToString()
-                        }
-                    };
-
                     try
                     {
-                        var meta = await reference.GetMetadataAsync();
-                        if (meta.CustomMetadata["id_utente"] == this.mail)
+                        if (txtFilename.Text == "" || txtFilename.Text is null)
+                            temp = this.filename;
+                        else
+                            temp = txtFilename.Text;
+
+
+                        var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(temp);
+                        var metadata = new MetadataChange
                         {
-                            await DisplayAlert("Attenzione", "Hai già caricato questo documento!", "Ok");
-                            return;
+                            CustomMetadata = new Dictionary<string, string>
+                            {
+                                ["id_utente"] = this.mail,
+                                ["id_categoria"] = (cmbMateria.SelectedItem as message_materie.Materia).ID.ToString()
+                            }
+                        };
+
+                        try
+                        {
+                            var meta = await reference.GetMetadataAsync();
+                            if (meta.CustomMetadata["id_utente"] == this.mail)
+                            {
+                                await DisplayAlert("Attenzione", "Hai già caricato questo documento!", "Ok");
+                                return;
+                            }
+                            await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
+                            await reference.PutStreamAsync(file_upload, metadata);
                         }
-                        await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
-                        await reference.PutStreamAsync(file_upload, metadata);
+                        catch (Exception)
+                        {
+                            await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
+                            await reference.PutStreamAsync(file_upload, metadata);
+                        }
+
                     }
                     catch (Exception)
                     {
-                        await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
-                        await reference.PutStreamAsync(file_upload, metadata);
+                        await DisplayAlert("Attenzione", "Completa i campi necessari!", "Ok");
                     }
-                    
                 }
-                catch (Exception)
+                else
                 {
-                    await DisplayAlert("Attenzione", "Completa i campi necessari!", "Ok");
+                    await DisplayAlert("Attenzione", "Scegli correttamente il file da caricare o scegli una materia", "Ok");
                 }
             }
             else 
             {
-                await DisplayAlert("Attenzione", "Scegli correttamente il file da caricare", "Ok");
+                await DisplayAlert("Attenzione", "Per caricare un documento devi effettuare l'accesso", "Ok");
             }
         }
 

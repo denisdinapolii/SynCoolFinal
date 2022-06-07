@@ -23,6 +23,13 @@ namespace SynCoolFinal
 
 			[XmlElement(ElementName = "Nome")]
 			public string Nome { get; set; }
+
+			public Materia() { }
+			public Materia(int ID, string nome)
+			{
+				this.ID = ID;
+				this.Nome = nome;
+			}
 		}
 
 		[XmlRoot(ElementName = "materie")]
