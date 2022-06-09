@@ -1,5 +1,7 @@
 ﻿using Plugin.FirebaseStorage;
 using Plugin.Media.Abstractions;
+using SynCoolFinal.Models;
+using SynCoolFinal.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +26,7 @@ namespace SynCoolFinal
         public caricaAppunto()
         {
             InitializeComponent();
-            this.mail=Preferences.Get("mail", "default_value");
+            this.mail = Preferences.Get("mail", "default_value");
             this.Materia = -1;
             this.filename = "";
             this.file_upload = null;
@@ -49,62 +51,41 @@ namespace SynCoolFinal
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            string temp = "";// filename temp
-            if (this.mail != null && this.mail != "")
-            {
-                if (this.Materia > -1 && this.filename != "" && this.file_upload != null)
-                {
-                    try
-                    {
-                        if (txtFilename.Text == "" || txtFilename.Text is null)
-                            temp = this.filename;
-                        else
-                            temp = txtFilename.Text;
-
-
-                        var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(temp);
-                        var metadata = new MetadataChange
-                        {
-                            CustomMetadata = new Dictionary<string, string>
-                            {
-                                ["id_utente"] = this.mail,
-                                ["id_categoria"] = (cmbMateria.SelectedItem as message_materie.Materia).ID.ToString()
-                            }
-                        };
-
-                        try
-                        {
-                            var meta = await reference.GetMetadataAsync();
-                            if (meta.CustomMetadata["id_utente"] == this.mail)
-                            {
-                                await DisplayAlert("Attenzione", "Hai già caricato questo documento!", "Ok");
-                                return;
-                            }
-                            await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
-                            await reference.PutStreamAsync(file_upload, metadata);
-                        }
-                        catch (Exception)
-                        {
-                            await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
-                            await reference.PutStreamAsync(file_upload, metadata);
-                        }
-
-                    }
-                    catch (Exception)
-                    {
-                        await DisplayAlert("Attenzione", "Completa i campi necessari!", "Ok");
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("Attenzione", "Scegli correttamente il file da caricare o scegli una materia", "Ok");
-                }
-            }
-            else 
+            if (this.mail == null || this.mail == "")
             {
                 await DisplayAlert("Attenzione", "Per caricare un documento devi effettuare l'accesso", "Ok");
+                return;
             }
+
+            if (this.filename == "" || this.file_upload == null)
+            {
+                await DisplayAlert("Attenzione", "Scegli correttamente il file da caricare", "Ok");
+                return;
+            }
+
+            if (cmbMateria.SelectedItem == null) 
+            {
+                await DisplayAlert("Attenzione", "Scegli la materia", "Ok");
+                return;
+            }
+
+            if (await AppuntiService.isSet(this.mail, filename))
+            {
+                await DisplayAlert("Attenzione", "Hai già caricato questo documento!", "Ok");
+                return;
+            }
+
+
+            string temp = "";// filename temp
+            if (txtFilename.Text == "" || txtFilename.Text is null)
+                temp = this.filename;
+            else
+                temp = txtFilename.Text;
+
+            await AppuntiService.saveAppunto(filename, this.mail, (cmbMateria.SelectedItem as message_materie.Materia).ID, file_upload);
+            await DisplayAlert("Attenzione", "Hai caricato con successo il tuo documento!", "Ok");
         }
+
 
         private async void btnUpload_Clicked(object sender, EventArgs e)
         {
@@ -113,14 +94,11 @@ namespace SynCoolFinal
                 var file = await FilePicker.PickAsync();
                 this.file_upload = await file.OpenReadAsync();
                 this.filename = file.FileName;
-                if (txtFilename.Text is null || txtFilename.Text=="")
-                {
+
+                if (txtFilename.Text is null || txtFilename.Text == "")
                     txtFile.Text = this.filename;
-                }
-                else 
-                {
+                else
                     txtFile.Text = txtFilename.Text;
-                }
 
                 txtExt.Text = file.ContentType;
             }
@@ -128,7 +106,7 @@ namespace SynCoolFinal
             {
                 await DisplayAlert("Attenzione", "Il file non può essere caricato in SynCool", "Ok");
             }
-            
+
         }
 
         private void cmbMateria_SelectedIndexChanged(object sender, EventArgs e)
@@ -138,14 +116,11 @@ namespace SynCoolFinal
 
         private void txtFilename_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtFilename.Text == "") 
-            {
-                txtFile.Text=this.filename;
-            }
-            else 
-            {
+            if (txtFilename.Text == "")
+                txtFile.Text = this.filename;
+            else
                 txtFile.Text = txtFilename.Text;
-            }
         }
+
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Firebase.Storage;
 using Plugin.FirebaseStorage;
 using Plugin.Media;
-using SynCoolFinal.ViewModels;
+using SynCoolFinal.Models;
+using SynCoolFinal.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,23 +20,13 @@ namespace SynCoolFinal
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class home : ContentPage
     {
-        List<Plugin.FirebaseStorage.IStorageReference> l=new List<IStorageReference> ();
         public home()
         {
             InitializeComponent();
-            initItems();
             writeCmbMateria();
         }
 
         
-        private async void initItems() 
-        {
-            var listTemp = await CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").ListAllAsync();
-            var items = listTemp.Items.ToList();
-            this.l = items;
-            
-        }
-
         private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
 
@@ -43,24 +34,11 @@ namespace SynCoolFinal
 
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            List<Plugin.FirebaseStorage.IStorageReference> temp = new List<IStorageReference>();
-            temp = this.l.Where(s => s.Name.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
-            await Task.Run(() => createView(temp)); 
-        }
-
-        private async Task createView(List<IStorageReference> l)
-        {
-            List<AppuntiViewModel> list_temp = new List<AppuntiViewModel>();
-            AppuntiViewModel c;
-            for (int i = 0; i < l.Count; i++)
-            {
-                c = new AppuntiViewModel();
-                c.Nome = l.ElementAt(i).Name;
-                c.Materia = (await l.ElementAt(i).GetMetadataAsync()).CustomMetadata["id_categoria"];
-                list_temp.Add(c);
-            }
-        
-            Dispatcher.BeginInvokeOnMainThread(() => { listAppunti.ItemsSource = list_temp; });
+            List<Appunti> l;
+            l =  await AppuntiService.ToList(await AppuntiService.getList());
+            l = AppuntiService.listBySearchBar(e.NewTextValue.ToLower(), l);
+            l = await MateriaService.MateriaToNameAsync(l);
+            Dispatcher.BeginInvokeOnMainThread(() => { listAppunti.ItemsSource = l; });
         }
 
         
@@ -88,38 +66,20 @@ namespace SynCoolFinal
 
         private async void cmbMaterie_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbMaterie.SelectedIndex == 0) 
+            List<Appunti> l;
+            if (cmbMaterie.SelectedIndex != 0) //se una materia è selezionata
             {
-                await Task.Run(()=> createView(this.l));
-                return;
+                var m = cmbMaterie.SelectedItem as message_materie.Materia;
+                l = await AppuntiService.listByItem(m.ID);
             }
+            else
+                l = await AppuntiService.ToList(await AppuntiService.getList());
 
-            var m = cmbMaterie.SelectedItem as message_materie.Materia;
 
-            await Task.Run(() => createViewByMateria(m));
-
+            l = await MateriaService.MateriaToNameAsync(l);
+            Dispatcher.BeginInvokeOnMainThread(() => { listAppunti.ItemsSource = l; });
         }
 
-
-        private async Task createViewByMateria(message_materie.Materia m)
-        {
-            List<AppuntiViewModel> list_temp = new List<AppuntiViewModel>();
-            AppuntiViewModel c;
-            for (int i = 0; i < l.Count; i++)
-            {
-                c = new AppuntiViewModel();
-
-                var meta = await this.l.ElementAt(i).GetMetadataAsync();
-                if (int.Parse(meta.CustomMetadata["id_categoria"]) ==m.ID)
-                {
-                    c.Nome = l.ElementAt(i).Name;
-                    c.Materia = meta.CustomMetadata["id_categoria"];
-                    list_temp.Add(c);
-                }
-            }
-
-            Dispatcher.BeginInvokeOnMainThread(() => { listAppunti.ItemsSource = list_temp; });
-        }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {

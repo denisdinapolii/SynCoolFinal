@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using SynCoolFinal.ViewModels;
+using SynCoolFinal.Models;
 using Xamarin.Essentials;
 using System.IO;
 using System.Net.Http;
 using System;
 using Plugin.XamarinFormsSaveOpenPDFPackage;
+using SynCoolFinal.Services;
 
 namespace SynCoolFinal
 {
@@ -17,47 +18,26 @@ namespace SynCoolFinal
     public partial class listViewAppunti : ContentPage
     {
         public string mail { get; set; }
-        public List<AppuntiViewModel> l {get; set;}
         public listViewAppunti()
         {
             InitializeComponent();
-            this.l= new List<AppuntiViewModel>();
             this.mail = Preferences.Get("mail", "default_value");
-            viewAppunti();
+            Init();
         }
 
-        private async void viewAppunti()
+        private async void Init()
         {
-            // All
-            var result = await CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").ListAllAsync();
-            var items = result.Items.ToList();
-            await Task.Run(() => Task.Run(() => createView(items)));
-           
+            var l=  await AppuntiService.listByUser(this.mail);
+            l = await MateriaService.MateriaToNameAsync(l);
+            Dispatcher.BeginInvokeOnMainThread(() => { listAppunti.ItemsSource = l; } );
         }
 
-        private async Task createView(List<IStorageReference> l) 
-        {
-            AppuntiViewModel c;
-            for (int i = 0; i < l.Count; i++)
-            {
-                c = new AppuntiViewModel();
-                var meta= await l.ElementAt(i).GetMetadataAsync();
-                string mailT = meta.CustomMetadata["id_utente"];
-                if (mailT==this.mail) 
-                {
-                    c.Nome = meta.Name;
-                    c.Materia = meta.CustomMetadata["id_categoria"];
-                    this.l.Add(c);
-                }
-            }
-            Dispatcher.BeginInvokeOnMainThread(() => {  listAppunti.ItemsSource= this.l; });
-        }
-
+       
         private async void listAppunti_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             try
             {
-                var appunto = e.Item as AppuntiViewModel;
+                var appunto = e.Item as Appunti;
                 var reference = CrossFirebaseStorage.Current.Instance.RootReference.Child("appunti").Child(appunto.Nome);
                 var stream =await reference.GetStreamAsync();
                 var url = await reference.GetDownloadUrlAsync();
@@ -76,9 +56,13 @@ namespace SynCoolFinal
             
         }
 
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            listAppunti.ItemsSource = this.l.Where(s => s.Nome.Contains(e.NewTextValue));
+            List<Appunti> l = await AppuntiService.listBySearchBarAndUser(e.NewTextValue.ToLower(), this.mail);
+            l = await MateriaService.MateriaToNameAsync(l);
+            Dispatcher.BeginInvokeOnMainThread(() => { listAppunti.ItemsSource = l; });
         }
+
+
     }
 }
